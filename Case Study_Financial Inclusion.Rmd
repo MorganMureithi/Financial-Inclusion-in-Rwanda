@@ -1,0 +1,204 @@
+---
+title: "Case Study:Financial Inclusion in Rwanda"
+author: "Morgan Mureithi"
+date: "2025-05-30"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+## Including Plots
+
+You can also embed plots, for example:
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+#Loading Essential Libraries
+```{r}
+library(readr)
+library(lifecycle)
+library(dplyr)
+library(stringr)
+```
+
+
+#Loading the data
+```{r}
+Mobile_Survey<- read.csv(file.choose())
+View(Mobile_Survey)
+```
+
+
+#Re-arranging the data
+```{r}
+New_Mobile_Survey<-Mobile_Survey %>% 
+  group_by(hhid) %>% 
+  summarise(across(everything(),~paste0(unique(.),collapse = ",")))
+View(New_Mobile_Survey)
+```
+
+
+#Adding new columns to the df
+```{r}
+New_Mobile_Survey<-New_Mobile_Survey %>% 
+  mutate(FE=account_type=="None",
+          DFI=str_detect(account_type,"Mobile Money"))
+View(New_Mobile_Survey)
+View(New_Mobile_Survey %>%
+       select(account_type,DFI))
+```
+
+
+#Establishing rates (%) of Financial Exclusion(FE)
+```{r}
+table(New_Mobile_Survey$FE)
+round(prop.table(table(New_Mobile_Survey$FE))*100,2)
+```
+
+
+#Establishing rates (%) of Digital Financial Inclusion(DFI)
+```{r}
+table(New_Mobile_Survey$DFI)
+round(prop.table(table(New_Mobile_Survey$DFI))*100,2)
+```
+
+
+#Composition of the Mobile Money market w.r.t Co.
+```{r}
+unique(New_Mobile_Survey$mm_account_telco_main)
+New_Mobile_Survey<-New_Mobile_Survey %>%
+  mutate(
+    if_else(mm_account_telco_main == "" & mm_account_telco != "",
+            mm_account_telco,mm_account_telco_main))
+View(New_Mobile_Survey)
+View(New_Mobile_Survey %>%
+  select(mm_account_telco,mm_account_telco_main,`if_else(...)`))
+New_Mobile_Survey<-New_Mobile_Survey %>%
+  rename(Dominant_Companies = `if_else(...)`)
+View(New_Mobile_Survey)
+Companies_Market_Composition<-New_Mobile_Survey %>%
+  filter(Dominant_Companies != "")
+View(Companies_Market_Composition)
+```
+
+
+#Visualization of the Mobile Money market
+```{r}
+table(Companies_Market_Composition$Dominant_Companies)
+round(prop.table(table(Companies_Market_Composition$Dominant_Companies))*100,2)
+label <- round(prop.table(table(Companies_Market_Composition$Dominant_Companies))*100,2)
+Market_Size <- table(Companies_Market_Composition$Dominant_Companies)
+pie(Market_Size, labels = label, 
+    main = "Mobile Money Market_Composition", 
+    col = rainbow(length(Market_Size)))
+```
+
+
+#Establishing transaction Failures in Urban & Rural areas
+'''
+Test of Hypothesis(Two-tailed):Is there A difference in the share of customers who have experienced failures in Mobile Money transactions in Rural & Urban areas
+Ho:There is no significant difference in the share of customers who have experienced 
+Mobile Money transaction failures in Rural & Urban areas
+Ha:There is a significant difference in the share of customers who have experienced 
+Mobile Money transaction failures in Rural & Urban areas
+'''
+```{r}
+Falied_MM_Transactions <- New_Mobile_Survey %>%
+  filter(mm_account == 'yes' & v240 == 'yes')#Caution:Must have Mobile Money A/C & Have experienced failure in Transacting
+View(Falied_MM_Transactions)
+table(Falied_MM_Transactions$urban,Falied_MM_Transactions$v240)
+round(prop.table(table(Falied_MM_Transactions$urban,Falied_MM_Transactions$v240))*100,2)
+#Test Statistic:Z-test Difference of Proportions
+x1<-131
+x2<-83
+n1<-214
+n2<-214
+p1<-x1/n1
+p2<-x2/n2
+P<-(p1+p2)/(n1+n2)
+SE<-sqrt(P*(1-P)*(1/n1 + 1/n2))
+z<-(p1+p2)/SE
+print(z)
+p_value<-2*(1-pnorm(abs(z)))
+print(p_value)
+```
+
+
+'''
+Conclusion:Reject Ho
+Decision:There is a significant difference in the share of customers who have experienced 
+Mobile Money transaction failures in Rural & Urban areas
+'''
+
+#Establishing Factors that lead to someone canceling their Mobile Money Account
+```{r}
+Will_cancel<-New_Mobile_Survey 
+View(Will_cancel)
+```
+
+
+#Handling Blanks by filling them with the mode in each column
+```{r}
+mode <- function(repeated) {
+  unique_values <- unique(repeated[repeated != ""])
+  unique_values[which.max(tabulate(match(repeated, unique_values)))]}
+Will_cancel[] <- lapply(Will_cancel, function(col) {
+  if (is.character(col)) {
+    derived_mode <- mode(col)
+    col[col == ""] <- derived_mode 
+  }
+  return(col)
+})
+```
+
+
+#Dropping some columns (based on Theory)
+```{r}
+View(Will_cancel)
+Will_cancel <- Will_cancel[,-c(14,15,16,18,31)]
+View(Will_cancel)
+sum(is.na(Will_cancel))
+str(Will_cancel)
+Select_Will_cancel <- Will_cancel %>%
+  select(urban,gender,mm_trust,mm_account_cancelled,agent_trust,
+         prefer_cash,v237,v238,v240,v241,v242,v243,v244,v245,v246)
+View(Select_Will_cancel)
+```
+
+
+#Cramer Test for Association of categorical variables
+```{r}
+library(vcd)
+Select_Will_cancel[] <- lapply(Select_Will_cancel,as.factor)
+View(Select_Will_cancel)
+cramers_v <- function(x, y) {
+  table_association <- table(x, y)
+  suppressWarnings(assocstats(table_association)$cramer)
+}
+var_names <- names(Select_Will_cancel)
+n <- length(var_names)
+cramer_matrix <- matrix(NA, n, n)
+colnames(cramer_matrix) <- rownames(cramer_matrix) <- var_names
+for (i in 1:n) {
+  for (j in 1:n) {
+    cramer_matrix[i, j] <- cramers_v(Select_Will_cancel[[i]],
+                                     Select_Will_cancel[[j]])
+  }
+}
+View(cramer_matrix)
+library(corrplot)
+corrplot(cramer_matrix, method = "color", tl.cex = 0.8, is.corr = TRUE,
+         title = "Mobile Money Cramer Matrix", mar = c(0,0,1,0))
+```
+
+
+
+
