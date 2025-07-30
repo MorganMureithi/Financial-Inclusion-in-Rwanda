@@ -6,4 +6,6 @@ NGO's in the digital financial services  contracted Laterite , to conduct a surv
 The aim of the survey is to identify and carry out a diagnosis of issues negatively affecticng
 Mobile Money customers in the country  and propose areas of improvement.
 
-****
+**Analysis and Outcome**
+
+Utilised R progammming language to analyse and draw insights from the dataset.
