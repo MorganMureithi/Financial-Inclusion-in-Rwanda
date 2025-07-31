@@ -19,6 +19,8 @@ Company A leads the mobile money market with a **55.6%** market share,Company B 
 
 On the other hand, rural Mobile Money subscribers have registered most failures in transacting via  Mobile Money,where,tleast nearly **twice** as much failures in transactions were experineced by rural subcrisbers than their urban counterparts.
 
+**What steps should be taken:**
+
 **Recommendations**
 
 
