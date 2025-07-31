@@ -15,9 +15,9 @@ The survey saw **1205** participants take part in the study.Of these 1205 partci
 
 THis implies that the rates of financial inclusion in these districts stands at **89.1%** while Financial Exclusion settles at about **10.9%**
 
-Company A leads the mobile money market with a 55.6% market share,Company B comes second with a **41.8%** market share while Company C comes distant third with a small share of about **2.6%**
+Company A leads the mobile money market with a **55.6%** market share,Company B comes second with a **41.8%** market share while Company C comes distant third with a small share of about **2.6%**
 
-On the other hand, rural Mobile Money subscribers have registered most failures in transacting via  Mobile Money,where,tleast nearly twice as much failures in transactions were experineced by rural subcrisbers than their urban counterparts.
+On the other hand, rural Mobile Money subscribers have registered most failures in transacting via  Mobile Money,where,tleast nearly **twice** as much failures in transactions were experineced by rural subcrisbers than their urban counterparts.
 
 **Recommendations**
 
