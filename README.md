@@ -30,4 +30,16 @@ On the other hand, rural Mobile Money subscribers have registered most failures 
 
 **Recommendations**
 
+1.Companies ought to invest in their network strengths by havig more masts especially in the countryside
+
+2.Additionally, a clear system of chanelling feedback,compliments and compliments.
+This will ensure uptake of more subscribers by ensuring better Customer Experience ,all round when intercating with any of their products : data,calls,Mobile Money or any other
+
+3.The Specialist Advisory Board ought to carryout awareness on various topics surrounding Mobile Money,especially to rural clientele.
+They include on:
+   1).Uderstanding Terms and Conditions around Mobile Money:Data Security / Privacy , Fees charged around transacting via Mobile Money
+
+   2).Address customers concerns around Fraud issues surrounding Mobile Money sevices : PIN ,Theft of Money
+
+   3).Assure and Re-asure Mobile Money customers around the workings of Mobile Money.This is to aim to demistify,cast out any doubt and falsehoods surrounding Mobile Money.
 
