@@ -33,7 +33,7 @@ Atleast nearly **twice** as much failures in transactions were experineced by ru
 
 1.Companies ought to invest in their network strengths by havig more masts especially in the countryside
 
-2.Additionally, a clear system of chanelling feedback,compliments and compliments.
+2.Additionally, a clear system of chanelling feedback,compliments and complaints.
 This will ensure uptake of more subscribers by ensuring better Customer Experience ,all round when intercating with any of their products : data,calls,Mobile Money or any other
 
 3.The Specialist Advisory Board ought to carryout awareness on various topics surrounding Mobile Money,especially to rural clientele.
