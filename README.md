@@ -17,7 +17,8 @@ THis implies that the rates of financial inclusion in these 3 districts stand at
 
 Company A leads the mobile money market with a **55.6%** market share,Company B comes second with a **41.8%** market share while Company C comes distant third with a small share of about **2.6%**
 
-On the other hand, rural Mobile Money subscribers have registered most failures in transacting via  Mobile Money,where,tleast nearly **twice** as much failures in transactions were experineced by rural subcrisbers than their urban counterparts.
+On the other hand, rural Mobile Money subscribers have registered most failures in transacting via  Mobile Money.
+Atleast nearly **twice** as much failures in transactions were experineced by rural subcrisbers than their urban counterparts.
 
 
 **Notable issues :** 
